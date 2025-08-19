@@ -1,0 +1,92 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class CrudApp {
+    private static ArrayList<String> items = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+        do {
+            System.out.println("\n=== Simple CRUD App ===");
+            System.out.println("1. Create (Add Item)");
+            System.out.println("2. Read (View Items)");
+            System.out.println("3. Update (Edit Item)");
+            System.out.println("4. Delete (Remove Item)");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    createItem();
+                    break;
+                case 2:
+                    readItems();
+                    break;
+                case 3:
+                    updateItem();
+                    break;
+                case 4:
+                    deleteItem();
+                    break;
+                case 5:
+                    System.out.println("Exiting program... Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
+            }
+        } while (choice != 5);
+    }
+
+    private static void createItem() {
+        System.out.print("Enter item to add: ");
+        String item = scanner.nextLine();
+        items.add(item);
+        System.out.println("Item added successfully!");
+    }
+
+    private static void readItems() {
+        System.out.println("\n--- Item List ---");
+        if (items.isEmpty()) {
+            System.out.println("No items found.");
+        } else {
+            for (int i = 0; i < items.size(); i++) {
+                System.out.println((i + 1) + ". " + items.get(i));
+            }
+        }
+    }
+
+    private static void updateItem() {
+        readItems();
+        if (!items.isEmpty()) {
+            System.out.print("Enter item number to update: ");
+            int index = scanner.nextInt() - 1;
+            scanner.nextLine(); // consume newline
+            if (index >= 0 && index < items.size()) {
+                System.out.print("Enter new value: ");
+                String newValue = scanner.nextLine();
+                items.set(index, newValue);
+                System.out.println("Item updated successfully!");
+            } else {
+                System.out.println("Invalid item number.");
+            }
+        }
+    }
+
+    private static void deleteItem() {
+        readItems();
+        if (!items.isEmpty()) {
+            System.out.print("Enter item number to delete: ");
+            int index = scanner.nextInt() - 1;
+            scanner.nextLine(); // consume newline
+            if (index >= 0 && index < items.size()) {
+                items.remove(index);
+                System.out.println("Item deleted successfully!");
+            } else {
+                System.out.println("Invalid item number.");
+            }
+        }
+    }
+}
